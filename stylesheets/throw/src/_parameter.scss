@@ -10,7 +10,8 @@
 
 @use "sass:meta";
 @use "sass:map";
-@use "variable";
+@use "internal/format";
+@use "internal/throw";
 
 ///
 /// Returns an error message stating an issue with one or more parameters.
@@ -28,15 +29,17 @@
 /// @require    {Function}  meta.variable-exists
 /// @require    {Function}  map.has-key
 /// @require    {Function}  map.get
-/// @require    {Function}  variable.variable
+/// @require    {Function}  format.variable-name
+/// @require    {Function}  throw.exception
 /// 
 @function parameter($message, $context, $names...) {
     $keywords: meta.keywords($names);
 
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    
-    // @return variable.variable('#{$message} for `#{$context}()`', $names...);
-    @return variable.variable('#{$message} for `#{$context}()`', $names, $catch: $optCatch);
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $names: format.variable-name($names);
+    $message: '#{$message} for `#{$context}()`';
+
+    @return throw.exception($message, $names, $catch);
 }
 
 ///
@@ -49,15 +52,17 @@
 /// @require    {Function}  meta.variable-exists
 /// @require    {Function}  map.has-key
 /// @require    {Function}  map.get
-/// @require    {Function}  variable.variable
+/// @require    {Function}  format.variable-name
+/// @require    {Function}  throw.exception
 /// 
 @function parameter-exception($message, $context, $names...) {
     $keywords: meta.keywords($names);
 
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    
-    // @return variable.variable('#{$message} for `#{$context}()`', $names...);
-    @return variable.variable('#{$message} for `#{$context}()`', $names, $catch: $optCatch);
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $names: format.variable-name($names);
+    $message: '#{$message} for `#{$context}()`';
+
+    @return throw.exception($message, $names, $catch);
 }
 
 ///
@@ -82,10 +87,11 @@
 @mixin parameter($message, $context, $names...) {
     $keywords: meta.keywords($names);
 
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    
-    // @include variable.variable('#{$message} for `@#{$context}`', $names...);
-    @include variable.variable('#{$message} for `@#{$context}`', $names, $catch: $optCatch);
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $names: format.variable-name($names);
+    $message: '#{$message} for `@#{$context}`';
+
+    @include throw.exception($message, $names, $catch);
 }
 
 ///
@@ -103,8 +109,9 @@
 @mixin parameter-exception($message, $context, $names...) {
     $keywords: meta.keywords($names);
 
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    
-    // @include variable.variable('#{$message} for `@#{$context}`', $names...);
-    @include variable.variable('#{$message} for `@#{$context}`', $names, $catch: $optCatch);
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $names: format.variable-name($names);
+    $message: '#{$message} for `@#{$context}`';
+
+    @include throw.exception($message, $names, $catch);
 }

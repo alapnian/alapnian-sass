@@ -15,9 +15,17 @@
     <a target="_blank" href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/alapnian/alapnian-sass"/></a>
 </p>
 
+<p align="center">
+    <a target="_blank" href="">Home</a>&nbsp;•&nbsp;
+    <a target="_blank" href="">Package</a>&nbsp;•&nbsp;
+    <a target="_blank" href="">Getting Started</a>&nbsp;•&nbsp;
+    <a target="_blank" href="">Wiki</a>&nbsp;•&nbsp;
+    <a target="_blank" href="">License</a>
+</p>
+
 <h2>Package</h2>
 <dl>
-    <dt><a target="_blank" href="https://github.com/alapnian/sass-modules/wiki/Package#-throw"><code>alapnian-sass/throw</code> <sup><span style="color: gold;">New</span></sup></a></dt>
+    <dt><a target="_blank" href="https://github.com/alapnian/sass-modules/wiki/Package#-throw"><code>alapnian-sass/throw</code></a> <sup><span style="color: gold;">New</span></sup></dt>
     <dd>Provides Sass functions to standardize exception messages.</dd>
 </dl>
 

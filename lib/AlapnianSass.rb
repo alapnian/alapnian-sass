@@ -13,7 +13,7 @@ Compass::Frameworks.register("alapnian-sass", :path => "#{File.dirname(__FILE__)
 
 module AlapnianSass
   
-  VERSION = "1.0.0"
+  VERSION = "0.0.0-alpha"
   DATE = "2025-08-04"
 
 end
