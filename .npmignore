@@ -7,8 +7,16 @@
 # (/) Developed by Alapnian Sass Dev #
 # ################################## #
 
+#-------------------------
 # Stylesheets
+#-------------------------
 .sass-cache/
 *.css.map
 *.sass.map
 *.scss.map
+
+#-------------------------
+# Node Package Manager
+#-------------------------
+node_modules/
+package-lock.json
