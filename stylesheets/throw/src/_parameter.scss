@@ -1,0 +1,110 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@use "sass:meta";
+@use "sass:map";
+@use "variable";
+
+///
+/// Returns an error message stating an issue with one or more parameters.
+/// 
+/// @param  {String}        $message    - The message which describes the issue.
+/// @param  {String}        $context    - The name of the function issuing the error.
+/// @param  {ArgList<*>}    $names      - The names of the parameters for which there is an issue.
+/// @param  {Bool|'warn'}   $catch      - Optionally catch errors and return them as values without stopping compilation.
+/// @return {String}        - A string describing the reason one or more parameters are invalid.
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}  meta.keywords
+/// @require    {Function}  meta.variable-exists
+/// @require    {Function}  map.has-key
+/// @require    {Function}  map.get
+/// @require    {Function}  variable.variable
+/// 
+@function parameter($message, $context, $names...) {
+    $keywords: meta.keywords($names);
+
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    // @return variable.variable('#{$message} for `#{$context}()`', $names...);
+    @return variable.variable('#{$message} for `#{$context}()`', $names, $catch: $optCatch);
+}
+
+///
+/// Alias function name of throw.parameter
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}  meta.keywords
+/// @require    {Function}  meta.variable-exists
+/// @require    {Function}  map.has-key
+/// @require    {Function}  map.get
+/// @require    {Function}  variable.variable
+/// 
+@function parameter-exception($message, $context, $names...) {
+    $keywords: meta.keywords($names);
+
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    // @return variable.variable('#{$message} for `#{$context}()`', $names...);
+    @return variable.variable('#{$message} for `#{$context}()`', $names, $catch: $optCatch);
+}
+
+///
+/// Output an error message stating an issue with one or more parameters.
+/// 
+/// @param  {String}        $message    - The message which describes the issue.
+/// @param  {String}        $context    - The name of the mixin issuing the error.
+/// @param  {ArgList<*>}    $names      - The names of the parameters for which there is an issue.
+/// @param  {Bool|'warn'}   $catch      - Optionally catch errors, and output them as CSS comments without stopping compilation.
+/// 
+/// @output A string describing the reason one or more parameters are invalid.
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}  meta.keywords
+/// @require    {Function}  meta.variable-exists
+/// @require    {Function}  map.has-key
+/// @require    {Function}  map.get
+/// @require    {Mixin} variable.variable
+/// 
+@mixin parameter($message, $context, $names...) {
+    $keywords: meta.keywords($names);
+
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    // @include variable.variable('#{$message} for `@#{$context}`', $names...);
+    @include variable.variable('#{$message} for `@#{$context}`', $names, $catch: $optCatch);
+}
+
+///
+/// Alias mixin name of throw.parameter
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}  meta.keywords
+/// @require    {Function}  meta.variable-exists
+/// @require    {Function}  map.has-key
+/// @require    {Function}  map.get
+/// @require    {Mixin}  variable.variable
+/// 
+@mixin parameter-exception($message, $context, $names...) {
+    $keywords: meta.keywords($names);
+
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    // @include variable.variable('#{$message} for `@#{$context}`', $names...);
+    @include variable.variable('#{$message} for `@#{$context}`', $names, $catch: $optCatch);
+}

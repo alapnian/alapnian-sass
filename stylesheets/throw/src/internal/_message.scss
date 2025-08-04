@@ -1,0 +1,89 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@use "sass:meta";
+@use "sass:list";
+@use "sass:string";
+@use "combine";
+
+///
+/// Output a message to CSS comments or command line terminal (via debug/warn).
+/// 
+/// @param  {String}                                $message                - Message to output.
+/// @param  {'comments'|'terminal'|'debug'|'warn'}  $source ['comments']    - Type of output, either `comments`, `terminal`, `debug` or `warn`.
+/// @param  {Number}                                $comment-padding [0]    - When `$source` is 'comment', set margin message.
+/// 
+/// @output A message to CSS comments or command line terminal (via debug/warn).
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}      list.index
+/// 
+@mixin message($message, $output: 'comments', $comment-padding: 0) {
+  $pad: '';
+
+  @if ($comment-padding > 0) {
+    @for $i from 0 to $comment-padding {
+      $pad: $pad + ' ';
+    }
+  }
+
+  @each $line in $message {
+    @if list.index($output, 'comments') {
+      // sass-lint:disable-line no-empty-rulesets
+
+      /* #{$pad + $line} */ // sass-lint:disable-line no-css-comments
+    }
+
+    @if list.index($output, 'debug') or list.index($output, 'terminal') {
+      @debug $line; // sass-lint:disable-line no-debug
+    }
+
+    @if list.index($output, 'warn') {
+      @warn $line;
+    }
+  }
+}
+
+///
+/// Returns a string stating the specified value is invalid for the given types.
+///
+/// @param  {List}    $types                      - The types which are expected.
+/// @param  {*}       $value                      - The value which was received.
+/// @param  {String}  $additional-message [null]  - The additional message which describes the issue.
+/// @return {String}
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  list.length
+/// @require    {Function}  list.nth
+/// @require    {Function}  list.set-nth
+/// @require    {Function}  meta.inspect
+/// @require    {Function}  string.unquote
+/// @require    {Function}  combine.combine
+///
+@function invalid-type($types, $value, $additional-message: null) {
+  $length: list.length($types);
+
+  @if $length > 1 {
+    $types: list.set-nth($types, $length, 'or #{list.nth($types, $length)}');
+  }
+
+  $types: combine.combine($types, if($length > 2, ', ', ' '));
+  $message: '`#{meta.inspect($value)}` is not a #{string.unquote($types)}';
+
+  @if $additional-message {
+    $message: '#{$message}. #{string.unquote($additional-message)}';
+  }
+
+  @return $message;
+}

@@ -1,0 +1,190 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@use "sass:list";
+@use "sass:meta";
+@use "sass:string";
+
+///
+/// Concatenates all of the items in a list to a string, separated by the list’s separator or a specified glue string.
+/// If the list has only one item, then that item will be returned without using the glue.
+/// 
+/// @param  {List}      $list   - The list to combine.
+/// @param  {String}    $glue   - The string to separate each pair of adjacent items of the list. The value is converted to a string if necessary.
+/// @return {String}    - A string with all list items combine.
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  join
+/// @require    {Function}  _flat
+/// @require    {Function}  _delimiter
+@function combine($list, $glue: _delimiter($list)) {
+    @return join(_flat($list), $glue, 'list');
+}
+
+///
+/// Creates a normalized string from the provided value, with unique punctuation differentiating types and characteristics.
+/// 
+/// @param  {*}         $value  - The value from which to generate a string.
+/// @return {String}    
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  meta.type-of
+/// @require    {Function}  meta.inspect
+/// @require    {Function}  list.is-bracketed
+/// @require    {Function}  string.index
+/// @require    {Function}  string.slice
+/// @require    {Function}  to-string
+/// 
+@function from($value) {
+    $type: meta.type-of($value);
+
+    @if $type == 'string' {
+        @return $value;
+    }
+
+    @if $type == 'map' {
+        @return '{' + to-string($value, $type) + '}';
+    }
+
+    @if $type == 'list' or $type == 'arglist' {
+        $is-bracketed: list.is-bracketed($value);
+        $value: to-string($value, $type);
+
+        @return if($is-bracketed, '[' + $value + ']', '(' + $value + ')');
+    }
+
+    @if $type == 'function' {
+        $value: meta.inspect($value);
+        $value: string.slice($value, string.index($value, '"') + 1);
+        $value: string.slice($value, 0, string.index($value, '"') - 1) + '()';
+    }
+
+    @return '#{$value}';
+}
+
+///
+/// Returns a string representing the specified list or map and its items.
+///
+/// @param  {List}                          $value  - The value from which to generate a string.
+/// @param  {'list' | 'map' | 'arglist'}    $type   - The type value from which to generate a string.
+/// @return {String}
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  join
+/// @require    {Function}  _delimiter
+///
+@function to-string($value, $type) {
+
+    @if $type == 'map' {
+        @return join($value, '; ', $type);
+    }
+
+    @return join($value, _delimiter($value), $type);
+}
+
+///
+/// Concatenates all of the items in an iterable value to a string, separated by the specified glue string. If the iterable has only one item, then that item will be returned without using the glue.
+///
+/// @param  {List | Map | ArgList}          $value  - The iterable to join.
+/// @param  {String}                        $glue   - The string to separate each pair of adjacent items of the iterable value. The value is converted to a string if necessary.
+/// @param  {'list' | 'map' | 'arglist'}    $type   - The type used to determine expected format.
+/// @return {String}                        - A string with all list items joined.
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  list.length
+/// @require    {Function}  meta.keywords
+/// @require    {Function}  from
+///
+@function join($value, $glue, $type) {
+    $length: list.length($value);
+    $glue: from($glue);
+    $result: '';
+    $index: 1;
+
+    @each $item in $value {
+
+        @if $type == 'map' {
+            $item: join($item, ': ', 'list');
+        }
+
+        $result: $result + from($item);
+
+        @if $index < $length {
+            $result: $result + $glue;
+        }
+
+        $index: $index + 1;
+    }
+
+    @if $type == 'arglist' {
+        $result: $result + $glue + join(meta.keywords($value), ', ', 'map');
+    }
+
+    @return $result;
+}
+
+///
+/// Recursively flattens a list.
+///
+/// @param  {List}  $list   - The list to be flattened.
+/// @return {List}
+/// 
+/// @group  Throw
+/// @access private
+/// 
+/// @require    {Function}  list.join
+/// @require    {Function}  list.separator
+/// @require    {Function}  list.length
+/// @require    {Function}  list.append
+///
+@function _flat($list) {
+    $result: list.join((), (), list.separator($list));
+
+    @each $item in $list {
+
+        @if list.length($item) > 1 {
+            $sub-list: _flat($item);
+
+            @each $sub-item in $sub-list {
+                $result: list.append($result, $sub-item);
+            }
+        }
+
+        @else {
+            $result: list.append($result, $item);
+        }
+    }
+
+    @return $result;
+}
+
+///
+/// Returns the delimiter to use when joining the items of the specified list.
+///
+/// @param  {List}      $list   - The list for which to determine a delimiter.
+/// @return {String}
+/// 
+/// @group  Throw
+/// @access private
+/// 
+/// @require    {Function}  list.separator
+///
+@function _delimiter($list) {
+    $separator: list.separator($list);
+    @return if($separator == 'space', ' ', if($separator == 'comma', ', ', ' / '));
+}

@@ -1,0 +1,79 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@use "sass:list";
+@use "combine";
+
+///
+/// @param  {ArgList}   $names
+/// @return {String|null}
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  list.length
+/// @require    {Function}  combine.combine
+/// 
+@function variable-name($names...) {
+    @if list.length($names) > 0 {
+        $names: combine.combine($names, ', $');
+        
+        @return '$#{$names}';
+    }
+    
+    @return null;
+}
+
+///
+/// @param  {ArgList}   $names
+/// @return {String|null}
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  list.length
+/// @require    {Function}  combine.combine
+///
+@function mixin-name($names...) {
+    @if list.length($names) > 0 {
+        $names: combine.combine($names, ', @');
+        
+        @return '@#{$names}';
+    }
+    
+    @return null;
+}
+
+///
+/// @param  {ArgList}   $names
+/// @return {String|null}
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  list.length
+/// @require    {Function}  list.append
+/// @require    {Function}  combine.combine
+///
+@function function-name($names...) {
+    $results: ();
+
+    @each $name in $names {
+        $results: list.append($results, $name + '()');
+    }
+
+    @if list.length($results) > 0 {
+        $results: combine.combine($results, ', ');
+
+        @return '#{$results}';
+    }
+
+    @return null;
+}

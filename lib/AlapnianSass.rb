@@ -7,8 +7,13 @@
 # (/) Developed by Alapnian Sass Dev #
 # ################################## #
 
-# Stylesheets
-.sass-cache/
-*.css.map
-*.sass.map
-*.scss.map
+require 'compass'
+require 'compass-blend-modes'
+Compass::Frameworks.register("alapnian-sass", :path => "#{File.dirname(__FILE__)}/..")
+
+module AlapnianSass
+  
+  VERSION = "1.0.0"
+  DATE = "2025-08-04"
+
+end

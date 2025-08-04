@@ -1,0 +1,121 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@use "sass:meta";
+@use "sass:map";
+@use "variable";
+@use "internal/message";
+
+///
+/// Returns an error message stating a variable received the wrong type.
+/// 
+/// @alias variable-type-exception
+/// 
+/// @param  {String}        $name       - The name of the variable which has received the wrong type.
+/// @param  {*}             $value      - The value which was received.
+/// @param  {ArgList<*>}    $types      - The types which are expected.
+/// @param  {String}        $message    - The additional message which describes the issue. Must be passed by name.
+/// @param  {Bool|'warn'}   $catch      - Optionally catch errors and return them as values without stopping compilation.
+/// @return {String}        - A string describing what types are acceptable for a variable and the value that is misconfigured.
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}      meta.keywords
+/// @require    {Function}      meta.variable-exists
+/// @require    {Function}      map.has-key
+/// @require    {Function}      map.get
+/// @require    {Function}      message.invalid-type
+/// @require    {Function}      variable.variable
+/// 
+@function variable-type($name, $value, $types...) {
+    $keywords: meta.keywords($types);
+
+    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    @return variable.variable(message.invalid-type($types, $value, $message), $name, $catch: $optCatch);
+}
+
+///
+/// Alias function name of throw.variable-type
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}      meta.keywords
+/// @require    {Function}      meta.variable-exists
+/// @require    {Function}      map.has-key
+/// @require    {Function}      map.get
+/// @require    {Function}      message.invalid-type
+/// @require    {Function}      variable.variable
+/// 
+@function variable-type-exception($name, $value, $types...) {
+    $keywords: meta.keywords($types);
+
+    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    @return variable.variable(message.invalid-type($types, $value, $message), $name, $catch: $optCatch);
+}
+
+///
+/// Output an error message stating a variable received the wrong type.
+/// 
+/// @alias variable-type-exception
+/// 
+/// @param  {String}        $name       - The name of the variable which has received the wrong type.
+/// @param  {*}             $value      - The value which was received.
+/// @param  {ArgList<*>}    $types      - The types which are expected.
+/// @param  {String}        $message    - The additional message which describes the issue. Must be passed by name.
+/// @param  {Bool|'warn'}   $catch      - Optionally catch errors and return them as values without stopping compilation.
+/// 
+/// @output A string describing what types are acceptable for a variable and the value that is misconfigured.
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}      meta.keywords
+/// @require    {Function}      meta.variable-exists
+/// @require    {Function}      map.has-key
+/// @require    {Function}      map.get
+/// @require    {Function}      message.invalid-type
+/// @require    {Mixin}         variable.variable
+/// 
+@mixin variable-type($name, $value, $types...) {
+    $keywords: meta.keywords($types);
+
+    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    @include variable.variable(message.invalid-type($types, $value, $message), $name, $catch: $optCatch);
+}
+
+///
+/// Alias mixin name of throw.variable-type
+/// 
+/// @group  API
+/// @access public
+/// 
+/// @require    {Function}      meta.keywords
+/// @require    {Function}      meta.variable-exists
+/// @require    {Function}      map.has-key
+/// @require    {Function}      map.get
+/// @require    {Function}      message.invalid-type
+/// @require    {Mixin}         variable.variable
+/// 
+@mixin variable-type-exception($name, $value, $types...) {
+    $keywords: meta.keywords($types);
+
+    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
+    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    
+    @include variable.variable(message.invalid-type($types, $value, $message), $name, $catch: $optCatch);
+}

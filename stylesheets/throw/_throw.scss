@@ -1,0 +1,15 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@forward "src/variable"         show variable-exception;
+@forward "src/variable-type"    show variable-type-exception;
+@forward "src/parameter"        show parameter-exception;
+@forward "src/parameter-type"   show parameter-type-exception;
+@forward "src/separator"        show separator-exception;

@@ -1,0 +1,95 @@
+////////////////////////////////////////
+// ▄▀█ █░░ ▄▀█ █▀█ █▄░█ █ ▄▀█ █▄░█
+// █▀█ █▄▄ █▀█ █▀▀ █░▀█ █ █▀█ █░▀█
+// 🅢🅐🅢🅢 🅜🅞🅓🅤🅛🅔🅢
+// 
+// (c) Copyright 2025 Alapnian
+// (/) Developed by Alapnian Sass Dev
+////////////////////////////////////////
+@charset 'UTF-8';
+
+@use "sass:meta";
+@use "sass:list";
+@use "message";
+
+///
+/// To avoid throwing errors that stop compilation, and return them as values (for functions) or output CSS comments (for mixins) instead.
+/// 
+/// @type Bool|String<'warn'>
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Function}  meta.variable-exists
+/// 
+@if not meta.variable-exists('catch-error') {
+    $catch-error: false;
+}
+
+///
+/// Format an error prefix, with source if available
+/// 
+/// @param  {String}    $source - Error source.
+/// @return {String}    - A string for Error prefix.
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+@function _prefix($source) {
+    @return if($source, 'ERROR [#{$source}]:', 'ERROR:');
+}
+
+///
+/// Use in place of `@error` statements inside functions.
+/// 
+/// @param  {String}        $message        - The error message to report.
+/// @param  {String|null}   $source [null]  - The source of the error, for additional context.
+/// @param  {Bool}          $cath           - Optionally catch errors and return them as values without stopping compilation.
+/// @return {String}        - A message detailing the source and error, when `$catch` is true.
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Bool|'warn'}   $catch-error
+/// @require    {Function}      _prefix
+/// 
+@function exception($message, $source: null, $catch: $catch-error) {
+    @if $catch {
+        @if $catch == 'true' {
+            @warn $message;
+        }
+
+        @return '#{_prefix($source)} #{$message}';
+    }
+
+    @error $message;
+}
+
+///
+/// Use in place of `@error` statements inside mixins or other control structures with CSS output (not functions).
+/// 
+/// @param  {String}        $message        - The error message to report.
+/// @param  {String|null}   $source [null]  - The source of the error, for additional context.
+/// @param  {Bool}          $cath           - Optionally catch errors, and output them as CSS comments without stopping compilation.
+/// 
+/// @output A message detailing the source and error, when `$catch` is true.
+/// 
+/// @group  Throw
+/// @access internal
+/// 
+/// @require    {Bool|'warn'}   $catch-error
+/// @require    {Function}      message.message
+/// @require    {Function}      _prefix
+/// 
+@mixin exception($message, $source: null, $catch: $catch-error) {
+    @if $catch {
+        @if $catch == 'warn' {
+            @warn $message;
+        }
+
+        @include message.message(_prefix($source), 'comments');
+        @include message.message($message, 'comments', $comment-padding: 2);
+    } @else {
+        @error $message;
+    }
+}

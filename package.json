@@ -1,0 +1,39 @@
+{
+    "name": "alapnian-sass",
+    "version": "1.0.0",
+    "description": "Provides extended variables, mixins and functions for Sass.",
+    "license": "MIT",
+    "homepage": "https://sass.dev.alapnian.com/",
+    "keywords": [
+        "sass",
+        "scss",
+        "stylesheets",
+        "modules",
+        "packages",
+        "variables",
+        "mixins",
+        "functions"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alapnian/alapnian-sass.git"
+    },
+    "main": "_index.scss",
+    "files": [
+        "/lib/*.rb",
+        "/src/**/*.s{a,c}ss",
+        "/**/src/*.s{a,c}ss",
+        "/stylesheets/**/*.s{a,c}ss",
+		"/*.s{a,c}ss",
+        "CHANGELOG.md",
+        "LICENSE",
+        "README.md"
+    ],
+    "bugs": {
+        "url": "https://github.com/alapnian/alapnian-sass/issues"
+    },
+    "author": {
+        "name": "Alapnian Sass Dev",
+        "email": "sass.dev@alapnian.com"
+    }
+}
