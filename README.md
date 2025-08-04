@@ -16,11 +16,11 @@
 </p>
 
 <p align="center">
-    <a target="_blank" href="">Home</a>&nbsp;•&nbsp;
-    <a target="_blank" href="">Package</a>&nbsp;•&nbsp;
-    <a target="_blank" href="">Getting Started</a>&nbsp;•&nbsp;
+    <a href="https://github.com/alapnian/alapnian-sass">Home</a>&nbsp;•&nbsp;
+    <a href="#package">Package</a>&nbsp;•&nbsp;
+    <a href="#getting-started">Getting Started</a>&nbsp;•&nbsp;
     <a target="_blank" href="">Wiki</a>&nbsp;•&nbsp;
-    <a target="_blank" href="">License</a>
+    <a href="#license">License</a>
 </p>
 
 <h2>Package</h2>
