@@ -8,14 +8,17 @@
 ////////////////////////////////////////
 @charset 'UTF-8';
 
+@use "sass:map";
+@use "sass:meta";
 @use 'parameter';
 @use 'variable';
 
 /// 
 /// Returns an error message stating a separator variable/parameter received the wrong value.
 /// 
-/// @param  {String}        $context    - The name of the function or mixin issuing the error.
-/// @param  {Bool|'warn'}   $catch      - Optionally catch errors and return them as values without stopping compilation.
+/// @param  {String}        $context                - The name of the function issuing the error.
+/// @param  {String}        $name ['separator']     - The name of the variables/parameters for which there is an issue.
+/// @param  {Bool|'warn'}   $catch                  - Optionally catch errors and return them as values without stopping compilation.
 /// @return {String}        - A string describing what values are acceptable for a separator.
 /// 
 /// @group  API
@@ -28,15 +31,10 @@
 /// @require    {Mixin}     variable.variable
 /// @require    {Mixin}     parameter.parameter
 /// 
-@function separator($args...) {
-    $keywords: meta.keywords($args);
-
+@function separator($name, $context, $catch: false) {
     $message: 'Must be "space", "comma", "slash", or "auto"';
-    $name: 'separator';
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $context: if(map.has-key($keywords, 'context'), map.get($keywords, 'context'), null);
 
-    @return if($context == null, variable.variable($message, $name, $catch: $optCatch), parameter.parameter($message, $context, $name, $catch: $optCatch));
+    @return parameter.parameter($message, $context, $name, $catch);
 }
 
 /// 
@@ -52,22 +50,18 @@
 /// @require    {Mixin}     variable.variable
 /// @require    {Mixin}     parameter.parameter
 /// 
-@function separator-exception($args...) {
-    $keywords: meta.keywords($args);
-
+@function separator-exception($name, $context, $catch: false) {
     $message: 'Must be "space", "comma", "slash", or "auto"';
-    $name: 'separator';
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $context: if(map.has-key($keywords, 'context'), map.get($keywords, 'context'), null);
 
-    @return if($context == null, variable.variable($message, $name, $catch: $optCatch), parameter.parameter($message, $context, $name, $catch: $optCatch));
+    @return parameter.parameter($message, $context, $name, $catch);
 }
 
 ///
 /// Output an error message stating a separator variable/parameter received the wrong value.
 /// 
-/// @param  {String}        $context    - The name of the function or mixin issuing the error.
-/// @param  {Bool|'warn'}   $catch      - Optionally catch errors, and output them as CSS comments without stopping compilation.
+/// @param  {String|null}   $context [null]         - The name of the function or mixin issuing the error.
+/// @param  {String}        $name ['separator']     - The name of the variables/parameters for which there is an issue.
+/// @param  {Bool|'warn'}   $catch                  - Optionally catch errors and return them as values without stopping compilation.
 /// 
 /// @output A string describing what values are acceptable for a separator.
 /// 
@@ -81,13 +75,8 @@
 /// @require    {Mixin}     variable.variable
 /// @require    {Mixin}     parameter.parameter
 /// 
-@mixin separator($args...) {
-    $keywords: meta.keywords($args);
-
+@mixin separator($name, $context: null, $catch: false) {
     $message: 'Must be "space", "comma", "slash", or "auto"';
-    $name: 'separator';
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $context: if(map.has-key($keywords, 'context'), map.get($keywords, 'context'), null);
 
     @if $context == null {
         @include variable.variable($message, $name, $catch: $optCatch);
@@ -110,12 +99,7 @@
 /// @require    {Mixin}     parameter.parameter
 /// 
 @mixin separator-exception($args...) {
-    $keywords: meta.keywords($args);
-
     $message: 'Must be "space", "comma", "slash", or "auto"';
-    $name: 'separator';
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $context: if(map.has-key($keywords, 'context'), map.get($keywords, 'context'), null);
 
     @if $context == null {
         @include variable.variable($message, $name, $catch: $optCatch);

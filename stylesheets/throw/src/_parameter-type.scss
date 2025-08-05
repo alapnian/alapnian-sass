@@ -38,9 +38,9 @@
     $keywords: meta.keywords($types);
 
     $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
 
-    @return parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch: $optCatch);
+    @return parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch);
 }
 
 ///
@@ -60,9 +60,9 @@
     $keywords: meta.keywords($types);
 
     $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
 
-    @return parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch: $optCatch);
+    @return parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch);
 }
 
 ///
@@ -91,9 +91,9 @@
     $keywords: meta.keywords($types);
 
     $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
 
-    @include parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch: $optCatch);
+    @include parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch);
 }
 
 ///
@@ -113,7 +113,7 @@
     $keywords: meta.keywords($types);
 
     $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
+    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
 
-    @include parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch: $optCatch);
+    @include parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch);
 }
