@@ -14,7 +14,7 @@
 @use "internal/throw";
 
 ///
-/// Returns an error message stating an issue with one or more parameters.
+/// Returns an error message stating an issue with one or more parameters of function.
 /// 
 /// @param  {String}        $message    - The message which describes the issue.
 /// @param  {String}        $context    - The name of the function issuing the error.
@@ -48,19 +48,14 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Function}  format.variable-name
-/// @require    {Function}  throw.exception
+/// @require    {Function}  parameter
 /// 
 @function parameter-exception($message, $context, $names...) {
     @return parameter($message, $context, $names...);
 }
 
 ///
-/// Output an error message stating an issue with one or more parameters.
+/// Output an error message stating an issue with one or more parameters of mixins.
 /// 
 /// @param  {String}        $message    - The message which describes the issue.
 /// @param  {String}        $context    - The name of the mixin issuing the error.
@@ -76,7 +71,7 @@
 /// @require    {Function}  meta.variable-exists
 /// @require    {Function}  map.has-key
 /// @require    {Function}  map.get
-/// @require    {Mixin} variable.variable
+/// @require    {Mixin}     throw.exception
 /// 
 @mixin parameter($message, $context, $names...) {
     $keywords: meta.keywords($names);
@@ -94,11 +89,7 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Mixin}  variable.variable
+/// @require    {Mixin} parameter
 /// 
 @mixin parameter-exception($message, $context, $names...) {
     @include parameter($message, $context, $names...);

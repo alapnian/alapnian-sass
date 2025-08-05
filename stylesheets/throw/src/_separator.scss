@@ -8,28 +8,21 @@
 ////////////////////////////////////////
 @charset 'UTF-8';
 
-@use "sass:map";
-@use "sass:meta";
 @use 'parameter';
 @use 'variable';
 
 /// 
 /// Returns an error message stating a separator variable/parameter received the wrong value.
 /// 
-/// @param  {String}        $context                - The name of the function issuing the error.
-/// @param  {String}        $name ['separator']     - The name of the variables/parameters for which there is an issue.
-/// @param  {Bool|'warn'}   $catch                  - Optionally catch errors and return them as values without stopping compilation.
+/// @param  {String}        $context    - The name of the function issuing the error.
+/// @param  {String}        $name       - The name of the parameters for which there is an issue.
+/// @param  {Bool|'warn'}   $catch      - Optionally catch errors and return them as values without stopping compilation.
 /// @return {String}        - A string describing what values are acceptable for a separator.
 /// 
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Mixin}     variable.variable
-/// @require    {Mixin}     parameter.parameter
+/// @require    {Function}  parameter.parameter
 /// 
 @function separator($name, $context, $catch: false) {
     $message: 'Must be "space", "comma", "slash", or "auto"';
@@ -43,12 +36,7 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Mixin}     variable.variable
-/// @require    {Mixin}     parameter.parameter
+/// @require    {Function}  separator
 /// 
 @function separator-exception($name, $context, $catch: false) {
     @return separator($name, $context, $catch);
@@ -57,19 +45,15 @@
 ///
 /// Output an error message stating a separator variable/parameter received the wrong value.
 /// 
-/// @param  {String|null}   $context [null]         - The name of the function or mixin issuing the error.
-/// @param  {String}        $name ['separator']     - The name of the variables/parameters for which there is an issue.
-/// @param  {Bool|'warn'}   $catch                  - Optionally catch errors and return them as values without stopping compilation.
+/// @param  {String}        $name           - The name of the variables/parameters for which there is an issue.
+/// @param  {String|null}   $context [null] - The name of the mixin issuing the error.
+/// @param  {Bool|'warn'}   $catch          - Optionally catch errors and return them as values without stopping compilation.
 /// 
 /// @output A string describing what values are acceptable for a separator.
 /// 
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
 /// @require    {Mixin}     variable.variable
 /// @require    {Mixin}     parameter.parameter
 /// 
@@ -89,12 +73,7 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Mixin}     variable.variable
-/// @require    {Mixin}     parameter.parameter
+/// @require    {Function}  separator
 /// 
 @mixin separator-exception($name, $context: null, $catch: false) {
     @include separator($name, $context, $catch)

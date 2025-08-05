@@ -14,7 +14,7 @@
 @use "internal/message";
 
 ///
-/// Returns an error message stating a parameter received the wrong type.
+/// Returns an error message stating a function parameter received the wrong type.
 /// 
 /// @param  {String}        $context    - The name of the function issuing the error.
 /// @param  {String}        $name       - The name of the parameter which has received the wrong type.
@@ -49,19 +49,14 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Function}  message.invalid-type
-/// @require    {Function}  parameter.parameter
+/// @require    {Function}  parameter-type
 /// 
 @function parameter-type-exception($context, $name, $value, $types...) {
     @return parameter-type($context, $name, $value, $types...);
 }
 
 ///
-/// Output an error message stating a parameter received the wrong type.
+/// Output an error message stating a mixin parameter received the wrong type.
 /// 
 /// @param  {String}        $context    - The name of the mixin issuing the error.
 /// @param  {String}        $name       - The name of the parameter which has received the wrong type.
@@ -97,12 +92,7 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}  meta.keywords
-/// @require    {Function}  meta.variable-exists
-/// @require    {Function}  map.has-key
-/// @require    {Function}  map.get
-/// @require    {Function}  message.invalid-type
-/// @require    {Mixin}     parameter.parameter
+/// @require    {Mixin} parameter-type
 /// 
 @mixin parameter-type-exception($context, $name, $value, $types...) {
     @include parameter-type($context, $name, $value, $types...);

@@ -51,12 +51,7 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}      meta.keywords
-/// @require    {Function}      meta.variable-exists
-/// @require    {Function}      map.has-key
-/// @require    {Function}      map.get
-/// @require    {Function}      message.invalid-type
-/// @require    {Mixin}         variable.variable
+/// @require    {Mixin} variable-type
 /// 
 @mixin variable-type-exception($name, $value, $types...) {
     @include variable-type($name, $value, $types...);

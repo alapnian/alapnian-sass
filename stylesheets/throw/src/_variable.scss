@@ -47,12 +47,7 @@
 /// @group  API
 /// @access public
 /// 
-/// @require    {Function}      meta.keywords
-/// @require    {Function}      meta.variable-exists
-/// @require    {Function}      map.has-key
-/// @require    {Function}      map.get
-/// @require    {Function}      format.variable-name
-/// @require    {Mixin}         throw.exception
+/// @require    {Mixin} variable
 /// 
 @mixin variable-exception($message, $names...) {
     @include variable($message, $names...);
