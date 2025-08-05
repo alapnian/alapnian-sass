@@ -59,10 +59,5 @@
 /// @require    {Mixin}         variable.variable
 /// 
 @mixin variable-type-exception($name, $value, $types...) {
-    $keywords: meta.keywords($types);
-
-    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $optCatch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    
-    @include variable.variable(message.invalid-type($types, $value, $message), $name, $catch: $optCatch);
+    @include variable-type($name, $value, $types...);
 }

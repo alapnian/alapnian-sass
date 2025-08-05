@@ -51,9 +51,7 @@
 /// @require    {Mixin}     parameter.parameter
 /// 
 @function separator-exception($name, $context, $catch: false) {
-    $message: 'Must be "space", "comma", "slash", or "auto"';
-
-    @return parameter.parameter($message, $context, $name, $catch);
+    @return separator($name, $context, $catch);
 }
 
 ///
@@ -98,12 +96,6 @@
 /// @require    {Mixin}     variable.variable
 /// @require    {Mixin}     parameter.parameter
 /// 
-@mixin separator-exception($args...) {
-    $message: 'Must be "space", "comma", "slash", or "auto"';
-
-    @if $context == null {
-        @include variable.variable($message, $name, $catch: $optCatch);
-    }@else{
-        @include parameter.parameter($message, $context, $name, $catch: $optCatch);
-    }
+@mixin separator-exception($name, $context: null, $catch: false) {
+    @include separator($name, $context, $catch)
 }

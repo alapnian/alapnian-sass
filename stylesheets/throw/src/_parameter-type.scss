@@ -57,12 +57,7 @@
 /// @require    {Function}  parameter.parameter
 /// 
 @function parameter-type-exception($context, $name, $value, $types...) {
-    $keywords: meta.keywords($types);
-
-    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-
-    @return parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch);
+    @return parameter-type($context, $name, $value, $types...);
 }
 
 ///
@@ -110,10 +105,5 @@
 /// @require    {Mixin}     parameter.parameter
 /// 
 @mixin parameter-type-exception($context, $name, $value, $types...) {
-    $keywords: meta.keywords($types);
-
-    $message: if(map.has-key($keywords, 'message'), map.get($keywords, 'message'), null);
-    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-
-    @include parameter.parameter(message.invalid-type($types, $value, $message), $context, $name, $catch);
+    @include parameter-type($context, $name, $value, $types...);
 }

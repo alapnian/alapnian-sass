@@ -55,10 +55,5 @@
 /// @require    {Mixin}         throw.exception
 /// 
 @mixin variable-exception($message, $names...) {
-    $keywords: meta.keywords($names);
-
-    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $names: format.variable-name($names);
-
-    @include throw.exception($message, $names, $catch);
+    @include variable($message, $names...);
 }

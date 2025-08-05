@@ -56,13 +56,7 @@
 /// @require    {Function}  throw.exception
 /// 
 @function parameter-exception($message, $context, $names...) {
-    $keywords: meta.keywords($names);
-
-    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $names: format.variable-name($names);
-    $message: '#{$message} for `#{$context}()`';
-
-    @return throw.exception($message, $names, $catch);
+    @return parameter($message, $context, $names...);
 }
 
 ///
@@ -107,11 +101,5 @@
 /// @require    {Mixin}  variable.variable
 /// 
 @mixin parameter-exception($message, $context, $names...) {
-    $keywords: meta.keywords($names);
-
-    $catch: if(map.has-key($keywords, 'catch'), map.get($keywords, 'catch'), if(meta.variable-exists('catch-error'), $catch-error, false));
-    $names: format.variable-name($names);
-    $message: '#{$message} for `@#{$context}`';
-
-    @include throw.exception($message, $names, $catch);
+    @include parameter($message, $context, $names...);
 }
