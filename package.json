@@ -1,6 +1,6 @@
 {
     "name": "alapnian-sass",
-    "version": "2.0.0-alpha.0",
+    "version": "0.0.0-alpha.0",
     "description": "Provides extended variables, mixins and functions for Sass.",
     "license": "MIT",
     "homepage": "https://sass.dev.alapnian.com/",
@@ -33,7 +33,6 @@
         "url": "https://github.com/alapnian/alapnian-sass/issues"
     },
     "author": "Alapnian Sass Dev <sass.dev@alapnian.com>",
-    "private": true,
     "devDependencies": {
         "clean-package": "^2.2.0",
         "cross-env": "^10.0.0",
