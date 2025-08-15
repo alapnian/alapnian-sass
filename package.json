@@ -1,6 +1,6 @@
 {
     "name": "alapnian-sass",
-    "version": "0.0.0-alpha.0",
+    "version": "0.0.0-alpha.1",
     "description": "Provides extended variables, mixins and functions for Sass.",
     "license": "MIT",
     "homepage": "https://sass.dev.alapnian.com/",
