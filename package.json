@@ -14,7 +14,10 @@
         "mixins",
         "functions"
     ],
-    "repository": "git+https://github.com/alapnian/alapnian-sass.git",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/alapnian/alapnian-sass.git"
+    },
     "main": "_index.scss",
     "files": [
         "/lib/*.rb",
@@ -27,7 +30,15 @@
         "README.md"
     ],
     "exports": {
-        "sass": "./_index.scss"
+        ".": {
+            "sass": "./_index.scss"
+        },
+        "./*.scss": {
+            "sass": "./*.scss"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
     },
     "bugs": {
         "url": "https://github.com/alapnian/alapnian-sass/issues"
